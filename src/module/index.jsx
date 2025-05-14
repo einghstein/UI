@@ -1,6 +1,7 @@
 import { Module } from "asab_webui_components";
 
 import { TableScreen } from './TableScreen.jsx';
+import { DetailsScreen } from "./Details.jsx";
 
 export default class TableApplicationModule extends Module {
 	constructor(app, name) {
@@ -18,5 +19,20 @@ export default class TableApplicationModule extends Module {
 			icon: 'bi bi-table',
 			url: "/",
 		});
+
+		app.Router.addRoute({
+			path: "/details/:id",
+			end: false,
+			name: 'Details',
+			component: DetailsScreen,
+		});
+
+		app.Navigation.addItem({
+			name: "Details",
+			icon: 'bi bi-info-circle',
+			url: "/details/:id",
+		});
+
+		
 	}
 }
