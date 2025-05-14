@@ -1,10 +1,17 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import { useTranslation } from 'react-i18next';
-import { TreeMenu } from 'asab_webui_components/dist/components/TreeMenu';
+
+function User({ id, name, email }) {
+	console.log('User', id, name, email);
+	return (
+		<li key={id}>
+			{name}    {email}
+		</li>
+	);
+}
+
 
 export function TableScreen(props) {
-	const { t } = useTranslation();
 	const [data, setData] = React.useState([]);
 	const [loading, setLoading] = React.useState(true);
 	const [error, setError] = React.useState(null);
@@ -16,7 +23,9 @@ export function TableScreen(props) {
 				return res.json();
 			})
 			.then((json) => {
-				setData(json);
+				// Ensure data is always an array
+				const usersArray = Array.isArray(json) ? json : (json.data ? json.data : [json]);
+				setData(usersArray);
 				setLoading(false);
 			})
 			.catch((err) => {
@@ -27,10 +36,18 @@ export function TableScreen(props) {
 
 	if (loading) return <div>Loading...</div>;
 	if (error) return <div>Error: {error}</div>;
-
+	console.log('data', data);
 	return (
 		<Container className='h-100'>
-			<TreeMenu data={data} />
+			<ul>
+				{data.map((userData, idx) => {
+					return (
+						User(userData)
+					)
+				})}
+			</ul>
 		</Container>
+		
 	);
+	
 }
