@@ -3,6 +3,7 @@ import { Module } from "asab_webui_components";
 import { TableScreen } from './TableScreen.jsx';
 import { DetailsScreen } from "./Details.jsx";
 
+console.log("lol");
 export default class TableApplicationModule extends Module {
 	constructor(app, name) {
 		super(app, "TableApplicationModule");
